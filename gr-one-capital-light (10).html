@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GR One Capital – Unlisted & Pre-IPO Shares</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:       #141c24;
+    --bg2:      #1e2c3a;
+    --bg3:      #2e4258;
+    --teal:     #f5a623;
+    --teal-dim: #c8841a;
+    --teal-glow:#2d8a8a30;
+    --silver:   #d0dce8;
+    --silver2:  #c8dae8;
+    --white:    #eef4fc;
+    --accent:   #1a6060;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Rajdhani', sans-serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5%;
+    background: linear-gradient(to bottom, rgba(20,28,36,0.97), rgba(20,28,36,0.90));
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(245,166,35,0.15);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.7rem;
+    text-decoration: none;
+  }
+
+  .nav-logo-icon {
+    width: 42px; height: 42px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .nav-logo-icon svg { width: 42px; height: 42px; }
+
+  .nav-brand {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700; font-size: 1rem;
+    letter-spacing: 0.18em;
+    color: #d0dce8;
+  }
+
+  .nav-brand span { color: var(--teal); }
+
+  /* ── HAMBURGER ── */
+  .hamburger {
+    display: none;
+    flex-direction: column; justify-content: center; gap: 5px;
+    width: 44px; height: 44px;
+    background: none; border: none; cursor: pointer;
+    padding: 8px; z-index: 200;
+  }
+
+  .hamburger span {
+    display: block; width: 22px; height: 2px;
+    background: var(--teal);
+    transition: transform 0.3s, opacity 0.3s;
+    transform-origin: center;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── MOBILE DRAWER ── */
+  .mobile-menu {
+    display: none;
+    position: fixed; inset: 0; z-index: 150;
+    background: rgba(20,28,36,0.99);
+    backdrop-filter: blur(16px);
+    flex-direction: column; align-items: center; justify-content: center;
+    gap: 2.5rem;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+
+  .mobile-menu.open {
+    opacity: 1; pointer-events: all;
+  }
+
+  .mobile-menu a {
+    color: var(--silver); text-decoration: none;
+    font-size: 1.6rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  .mobile-menu a:hover { color: var(--teal); }
+
+  .mobile-menu .mobile-cta {
+    margin-top: 1rem;
+    background: var(--teal); color: #ffffff;
+    padding: 0.9rem 2.5rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.05rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    border: none; cursor: pointer;
+  }
+
+  .nav-links {
+    display: flex; gap: 2.5rem; list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--silver2); text-decoration: none;
+    font-size: 0.85rem; letter-spacing: 0.1em; font-weight: 500;
+    text-transform: uppercase;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--teal);
+    transition: width 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--teal); }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--teal);
+    color: var(--teal);
+    padding: 0.5rem 1.4rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.85rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+
+  .nav-cta:hover {
+    background: var(--teal-glow);
+    box-shadow: 0 0 20px var(--teal-glow);
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    align-items: center;
+    padding: 8rem 5% 5rem;
+    overflow: hidden;
+    gap: 2rem;
+  }
+
+  .hero-grid-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(42,122,122,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(42,122,122,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 60% at 60% 50%, black 30%, transparent 100%);
+  }
+
+  .hero-glow {
+    position: absolute; right: -5%; top: 10%;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(42,122,122,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: pulse-glow 6s ease-in-out infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.08); }
+  }
+
+  .hero-content { position: relative; z-index: 1; }
+
+  .hero-logo-display {
+    position: relative;
+    width: 100%; height: 360px;
+    z-index: 1; opacity: 0.92;
+    animation: fade-up 1s 0.4s ease both;
+    filter: drop-shadow(0 0 40px rgba(245,166,35,0.1));
+  }
+
+  .hero-logo-display svg { width: 100%; height: 100%; }
+
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 0.8rem;
+    margin-bottom: 1.5rem;
+    animation: fade-up 0.8s ease both;
+  }
+
+  .hero-eyebrow-line {
+    width: 40px; height: 1px;
+    background: linear-gradient(to right, var(--teal), transparent);
+  }
+
+  .hero-eyebrow span {
+    font-size: 0.92rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--teal);
+    font-weight: 600;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.8rem, 6vw, 5.2rem);
+    font-weight: 600; line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    animation: fade-up 0.8s 0.1s ease both;
+  }
+
+  h1 em {
+    font-style: italic; color: var(--teal);
+    font-weight: 600;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem; font-weight: 600;
+    color: var(--silver2); line-height: 1.7;
+    max-width: 500px; margin-bottom: 2.5rem;
+    animation: fade-up 0.8s 0.2s ease both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fade-up 0.8s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--teal);
+    color: #1a2235;
+    padding: 0.85rem 2rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    border: none; cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+
+  .btn-primary:hover {
+    box-shadow: 0 0 30px rgba(245,166,35,0.32);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--teal);
+    padding: 0.85rem 2rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem; font-weight: 600;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    border: 1px solid rgba(45,138,138,0.4);
+    cursor: pointer;
+    transition: border-color 0.3s, color 0.3s, background 0.3s;
+    text-decoration: none; display: inline-block;
+  }
+
+  .btn-secondary:hover { border-color: var(--teal); background: rgba(42,122,122,0.04); color: var(--teal); }
+
+  .hero-stats {
+    display: flex; gap: 2rem; flex-wrap: wrap; z-index: 1;
+    animation: fade-up 0.8s 0.5s ease both;
+    margin-top: 2.5rem;
+    grid-column: 1;
+  }
+
+  .stat { text-align: center; }
+  .stat-worth {
+    font-size: 0.65rem; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--teal);
+    font-weight: 600; margin-bottom: 0.1rem;
+    opacity: 0.8;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem; font-weight: 600;
+    color: var(--teal); line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.7rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--silver2);
+    margin-top: 0.3rem;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(245,166,35,0.4), transparent);
+    margin: 0 5%;
+  }
+
+  /* ── SECTION ── */
+  section { padding: 6rem 5%; position: relative; }
+
+  .section-label {
+    font-size: 0.72rem; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--teal);
+    font-weight: 600; margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: inline-block; width: 24px; height: 1px;
+    background: var(--teal);
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 600; line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  /* ── WHY US ── */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+    margin-top: 3rem;
+  }
+
+  .why-text p {
+    color: var(--silver2); line-height: 1.8;
+    font-size: 1.05rem; font-weight: 600;
+    margin-bottom: 1.2rem;
+  }
+
+  .why-features {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  }
+
+  .feature-card { animation: fade-up 0.6s ease both;
+    background: var(--bg2);
+    border: 1px solid rgba(245,166,35,0.12);
+    padding: 1.5rem;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0;
+    width: 2px; height: 0;
+    background: var(--teal);
+    transition: height 0.4s;
+  }
+
+  .feature-card:hover { border-color: rgba(245,166,35,0.45); transform: translateY(-3px); }
+  .feature-card:hover::before { height: 100%; }
+
+  .feature-icon {
+    font-size: 1.6rem; margin-bottom: 0.8rem;
+    display: block;
+  }
+
+  .feature-title {
+    font-size: 0.95rem; font-weight: 600;
+    letter-spacing: 0.05em; color: var(--white);
+    margin-bottom: 0.4rem;
+  }
+
+  .feature-desc {
+    font-size: 0.95rem; color: var(--silver2);
+    font-weight: 600; line-height: 1.6;
+  }
+
+  /* ── PRODUCTS ── */
+  .products-bg { background: var(--bg2); }
+
+  .products-intro {
+    max-width: 560px; margin-bottom: 3rem;
+  }
+
+  .products-intro p {
+    color: var(--silver2); line-height: 1.8; font-weight: 600;
+  }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .product-card {
+    background: var(--bg3);
+    border: 1px solid rgba(245,166,35,0.1);
+    padding: 2rem 1.5rem;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    user-select: none;
+    -webkit-tap-highlight-color: rgba(45,138,138,0.1);
+  }
+
+  .product-card:hover {
+    border-color: var(--teal);
+    box-shadow: 0 4px 30px rgba(245,166,35,0.1);
+    transform: translateY(-4px);
+  }
+
+  .product-card:active {
+    transform: translateY(-2px);
+  }
+
+
+
+
+
+
+
+  .product-highlight {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(245,166,35,0.1);
+  }
+
+
+
+
+
+  .product-cta-row {
+    margin-top: 1.2rem;
+    display: flex; justify-content: flex-end;
+  }
+
+
+
+
+
+  /* ── HOW IT WORKS ── */
+  .steps {
+    display: flex; gap: 0; margin-top: 3rem;
+    position: relative;
+  }
+
+  .steps::before {
+    content: '';
+    position: absolute; top: 2.2rem; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(245,166,35,0.4) 20%, rgba(245,166,35,0.4) 80%, transparent);
+  }
+
+  .step {
+    flex: 1; text-align: center; padding: 0 1.5rem;
+    position: relative;
+  }
+
+  .step-num {
+    width: 44px; height: 44px;
+    border: 1px solid var(--teal);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; color: var(--teal);
+    margin: 0 auto 1.5rem;
+    background: var(--bg);
+  }
+
+  .step-title {
+    font-size: 0.95rem; font-weight: 600;
+    letter-spacing: 0.05em; color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .step-desc {
+    font-size: 0.95rem; color: var(--silver2);
+    font-weight: 600; line-height: 1.6;
+  }
+
+  /* ── TESTIMONIALS ── */
+  .testi-bg { background: var(--bg2); }
+
+  .testi-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 3rem;
+  }
+
+  .testi-card {
+    background: #141c24;
+    border: 1px solid rgba(42,122,122,0.12);
+    box-shadow: 0 2px 16px rgba(42,122,122,0.06);
+    padding: 2rem;
+  }
+
+  .testi-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem; color: var(--teal);
+    line-height: 0.5; margin-bottom: 1rem;
+    opacity: 0.4;
+  }
+
+  .testi-text {
+    font-size: 0.92rem; color: var(--silver);
+    line-height: 1.7; font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  .testi-author {
+    display: flex; align-items: center; gap: 0.8rem;
+  }
+
+  .testi-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, rgba(245,166,35,0.3), var(--bg3));
+    border: 1px solid rgba(245,166,35,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem; color: var(--teal); font-weight: 700;
+  }
+
+  .testi-name {
+    font-size: 0.85rem; font-weight: 600; color: var(--white);
+  }
+
+  .testi-role {
+    font-size: 0.72rem; color: var(--silver2);
+  }
+
+  /* ── CONTACT ── */
+  .contact-wrapper {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: start; margin-top: 3rem;
+  }
+
+  .contact-info p {
+    color: var(--silver2); line-height: 1.8;
+    font-weight: 600; margin-bottom: 2rem;
+  }
+
+  .contact-detail {
+    display: flex; align-items: flex-start; gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .contact-detail-icon {
+    font-size: 1.1rem; color: var(--teal); min-width: 1.5rem;
+  }
+
+  .contact-detail-text {
+    font-size: 0.9rem; color: var(--silver);
+    font-weight: 700; line-height: 1.5;
+  }
+
+  .contact-form {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .form-group label {
+    font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--silver2);
+    font-weight: 500;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    background: #0e161e;
+    border: 1px solid rgba(42,122,122,0.2);
+    color: var(--white);
+    padding: 0.75rem 1rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem; font-weight: 400;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%;
+  }
+
+  .form-group select option { background: var(--bg2); }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 12px rgba(245,166,35,0.12);
+  }
+
+  .form-group textarea { resize: vertical; min-height: 100px; }
+
+  .form-submit {
+    background: var(--teal);
+    color: #1a2235;
+    padding: 0.9rem;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 0.9rem; font-weight: 700;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    border: none; cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.2s;
+    width: 100%;
+  }
+
+  .form-submit:hover {
+    box-shadow: 0 0 30px rgba(245,166,35,0.32);
+    transform: translateY(-2px);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0e161e;
+    border-top: 1px solid rgba(245,166,35,0.12);
+    padding: 3rem 5%;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+  }
+
+  .footer-brand {
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700; font-size: 0.95rem;
+    letter-spacing: 0.15em; color: var(--silver2);
+  }
+
+  .footer-brand span { color: var(--teal); }
+
+  .footer-note {
+    font-size: 0.72rem; color: #5c7c9a;
+    letter-spacing: 0.05em; text-align: center;
+  }
+
+  .footer-links {
+    display: flex; gap: 2rem; list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.92rem; color: var(--silver2);
+    text-decoration: none; letter-spacing: 0.08em;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--teal); }
+
+  /* ── STICKY WHATSAPP BUTTON ── */
+  .wa-float {
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 120;
+    width: 56px; height: 56px; border-radius: 50%;
+    background: #25d366;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+  .wa-float svg { width: 30px; height: 30px; fill: white; }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    nav { padding: 0.9rem 4%; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .hamburger { display: flex; }
+    .mobile-menu { display: flex; }
+
+    .hero-logo-display { display: none; }
+    /* Hero */
+    .hero {
+      padding: 6rem 4% 3rem;
+      min-height: auto;
+      grid-template-columns: 1fr;
+      align-items: flex-start;
+    }
+    .hero-content { max-width: 100%; }
+    h1 { font-size: clamp(2.2rem, 10vw, 3rem); }
+    .hero-sub { font-size: 1rem; max-width: 100%; }
+    .hero-actions { flex-direction: column; width: 100%; }
+    .btn-primary, .btn-secondary { width: 100%; text-align: center; padding: 1rem; font-size: 1rem; }
+    .hero-stats {
+      position: static;
+      margin-top: 2.5rem;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      width: 100%;
+    }
+    .stat-num { font-size: 2rem; }
+    .hero-glow { width: 300px; height: 300px; right: -30%; top: 5%; }
+
+    /* Sections */
+    section { padding: 4rem 4%; }
+    h2 { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+
+    /* Why */
+    .why-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .why-features { grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .feature-card { animation: fade-up 0.6s ease both; padding: 1.2rem; }
+
+    /* Products */
+    .products-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .product-card { animation: fade-up 0.6s ease both; padding: 1.5rem; }
+
+    /* Steps */
+    .steps { flex-direction: column; gap: 2rem; }
+    .steps::before { display: none; }
+    .step { padding: 0; text-align: left; display: flex; align-items: flex-start; gap: 1.2rem; }
+    .step-num { min-width: 44px; margin: 0; }
+
+    /* Testimonials */
+    .testi-grid { grid-template-columns: 1fr; gap: 1rem; }
+
+    /* Contact */
+    .contact-wrapper { grid-template-columns: 1fr; gap: 2.5rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .form-group input, .form-group select, .form-group textarea {
+      font-size: 1rem; padding: 0.9rem 1rem;
+    }
+    .form-submit { font-size: 1rem; padding: 1rem; }
+
+    /* Footer */
+    footer { flex-direction: column; text-align: center; gap: 1.2rem; padding: 2rem 4%; }
+    .footer-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+  }
+
+  @media (max-width: 400px) {
+    .why-features { grid-template-columns: 1fr; }
+    h1 { font-size: 2rem; }
+  }
+
+
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.9rem; font-weight: 700;
+    color: var(--white); margin-bottom: 0.4rem;
+    line-height: 1.1;
+  }
+  .product-sector {
+    font-size: 0.92rem; color: var(--silver2);
+    font-weight: 700; letter-spacing: 0.03em;
+    margin-bottom: 1rem;
+  }
+  .product-highlight-label {
+    font-size: 0.78rem; color: var(--silver2);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    font-weight: 700;
+  }
+  .product-highlight-value {
+    font-size: 1.1rem; font-weight: 700; color: var(--teal);
+  }
+  .product-tag {
+    display: inline-block;
+    font-size: 0.68rem; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--teal);
+    border: 1px solid var(--teal-dim);
+    padding: 0.25rem 0.7rem; margin-bottom: 1rem;
+    font-weight: 700;
+  }
+  .product-cta-link {
+    pointer-events: none;
+    font-size: 0.82rem; color: var(--teal);
+    text-transform: uppercase; letter-spacing: 0.1em;
+    text-decoration: none; font-weight: 700;
+    display: flex; align-items: center; gap: 0.4rem;
+    transition: gap 0.3s;
+  }
+  .product-card:hover .product-cta-link { gap: 0.8rem; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <!-- Accurate SVG recreation of GR One Capital logo -->
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Teal ring gradient -->
+          <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f5a623"/>
+            <stop offset="50%" stop-color="#f5a623"/>
+            <stop offset="100%" stop-color="#c8841a"/>
+          </linearGradient>
+          <!-- Silver bar gradient -->
+          <linearGradient id="barGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#c8841a"/>
+            <stop offset="40%" stop-color="#f5a623"/>
+            <stop offset="70%" stop-color="#f5a623"/>
+            <stop offset="100%" stop-color="#c8841a"/>
+          </linearGradient>
+          <!-- Swoosh gradient -->
+          <linearGradient id="swooshGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#c8841a"/>
+            <stop offset="50%" stop-color="#f5a623"/>
+            <stop offset="100%" stop-color="#f5a623"/>
+          </linearGradient>
+          <clipPath id="circleClip">
+            <circle cx="50" cy="46" r="36"/>
+          </clipPath>
+        </defs>
+
+        <!-- Outer teal ring -->
+        <circle cx="50" cy="46" r="36" fill="none" stroke="url(#ringGrad)" stroke-width="4.5"/>
+
+        <!-- Inner ring accent -->
+        <circle cx="50" cy="46" r="30" fill="none" stroke="#1a5a5a" stroke-width="1.2" opacity="0.6"/>
+
+        <!-- Bar chart bars (4 bars, rising left to right) -->
+        <!-- Bar 1 (shortest) -->
+        <rect x="26" y="38" width="6" height="20" rx="0.5" fill="url(#barGrad)"/>
+        <!-- Bar 2 -->
+        <rect x="34" y="32" width="6" height="26" rx="0.5" fill="url(#barGrad)"/>
+        <!-- Bar 3 -->
+        <rect x="42" y="26" width="6" height="32" rx="0.5" fill="url(#barGrad)"/>
+        <!-- Bar 4 (tallest) -->
+        <rect x="50" y="22" width="6" height="36" rx="0.5" fill="url(#barGrad)"/>
+
+        <!-- Swoosh lines (bottom arc, 3 layered curves) -->
+        <path d="M 20 62 Q 38 52 62 58 Q 72 60 78 56" fill="none" stroke="url(#swooshGrad)" stroke-width="3.5" stroke-linecap="round"/>
+        <path d="M 18 67 Q 40 57 64 63 Q 74 65 80 60" fill="none" stroke="url(#swooshGrad)" stroke-width="2.5" stroke-linecap="round" opacity="0.75"/>
+        <path d="M 16 72 Q 42 62 66 68 Q 76 70 82 64" fill="none" stroke="url(#swooshGrad)" stroke-width="1.8" stroke-linecap="round" opacity="0.5"/>
+
+        <!-- Arrow head pointing upper-right -->
+        <polygon points="68,28 80,22 74,34" fill="#f5a623"/>
+        <!-- Arrow shaft -->
+        <line x1="56" y1="40" x2="76" y2="26" stroke="#f5a623" stroke-width="2.8" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <span class="nav-brand">GR ONE <span>CAPITAL</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#products">Opportunities</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU DRAWER -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#products" class="mobile-link">Opportunities</a>
+  <a href="#process" class="mobile-link">Process</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+  <button class="mobile-cta mobile-link" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get Started</button>
+</div>
+
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/918072404857" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span>Pre-IPO &amp; Unlisted Shares</span>
+    </div>
+    <h1>Invest Before the<br><em>World Finds Out</em></h1>
+    <p class="hero-sub">GR One Capital gives you access to high-growth companies before they go public — the kind of opportunities that were once reserved for institutional investors.</p>
+    <div class="hero-actions">
+      <a href="#products" class="btn-primary">View Opportunities</a>
+      <a href="#contact" class="btn-secondary">Talk to an Advisor</a>
+    </div>
+  </div>
+
+  <!-- Large logo on right side of hero -->
+  <div class="hero-logo-display">
+    <svg viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="hRingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#f5a623"/>
+          <stop offset="45%" stop-color="#f5a623"/>
+          <stop offset="100%" stop-color="#c8841a"/>
+        </linearGradient>
+        <linearGradient id="hBarGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#c8841a"/>
+          <stop offset="35%" stop-color="#f5a623"/>
+          <stop offset="65%" stop-color="#f5a623"/>
+          <stop offset="100%" stop-color="#c8841a"/>
+        </linearGradient>
+        <linearGradient id="hSwooshGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#c8841a"/>
+          <stop offset="50%" stop-color="#f5a623"/>
+          <stop offset="100%" stop-color="#f5a623"/>
+        </linearGradient>
+        <linearGradient id="hBarShade" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#ffffff" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#000000" stop-opacity="0.2"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Outer ring -->
+      <circle cx="100" cy="95" r="72" fill="none" stroke="url(#hRingGrad)" stroke-width="8" filter="url(#glow)"/>
+      <!-- Inner ring accent -->
+      <circle cx="100" cy="95" r="62" fill="none" stroke="#1a5050" stroke-width="2" opacity="0.5"/>
+
+      <!-- 4 rising bar chart bars -->
+      <!-- Bar 1 -->
+      <rect x="48" y="76" width="12" height="40" rx="1" fill="url(#hBarGrad)"/>
+      <rect x="48" y="76" width="12" height="40" rx="1" fill="url(#hBarShade)"/>
+      <!-- Bar 2 -->
+      <rect x="63" y="64" width="12" height="52" rx="1" fill="url(#hBarGrad)"/>
+      <rect x="63" y="64" width="12" height="52" rx="1" fill="url(#hBarShade)"/>
+      <!-- Bar 3 -->
+      <rect x="78" y="52" width="12" height="64" rx="1" fill="url(#hBarGrad)"/>
+      <rect x="78" y="52" width="12" height="64" rx="1" fill="url(#hBarShade)"/>
+      <!-- Bar 4 -->
+      <rect x="93" y="42" width="12" height="74" rx="1" fill="url(#hBarGrad)"/>
+      <rect x="93" y="42" width="12" height="74" rx="1" fill="url(#hBarShade)"/>
+
+      <!-- Swoosh curves (3 layered) -->
+      <path d="M 38 122 Q 72 108 118 116 Q 140 120 158 112" fill="none" stroke="url(#hSwooshGrad)" stroke-width="6.5" stroke-linecap="round"/>
+      <path d="M 35 132 Q 72 118 120 126 Q 142 130 160 121" fill="none" stroke="url(#hSwooshGrad)" stroke-width="4.5" stroke-linecap="round" opacity="0.7"/>
+      <path d="M 32 142 Q 74 128 122 136 Q 144 140 162 130" fill="none" stroke="url(#hSwooshGrad)" stroke-width="3" stroke-linecap="round" opacity="0.45"/>
+
+      <!-- Arrow -->
+      <line x1="105" y1="75" x2="148" y2="48" stroke="#f5a623" stroke-width="5" stroke-linecap="round" filter="url(#glow)"/>
+      <polygon points="148,44 162,38 155,52" fill="#f5a623" filter="url(#glow)"/>
+
+      <!-- Text -->
+      <text x="100" y="192" text-anchor="middle"
+        font-family="'Rajdhani', sans-serif"
+        font-size="18" font-weight="700"
+        letter-spacing="6"
+        fill="#1a4040">GR ONE CAPITAL</text>
+    </svg>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-worth">Worth</div>
+      <div class="stat-num">₹50Cr+</div>
+      <div class="stat-label">Deals Facilitated</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">400+</div>
+      <div class="stat-label">Investors Served</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Companies Available</div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- COMPANY MODAL -->
+<div id="companyModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;overflow-y:auto;">
+  <div id="modalBackdrop" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(10,14,20,0.92);backdrop-filter:blur(8px);"></div>
+  <div style="position:relative;z-index:1;min-height:100%;display:flex;align-items:center;justify-content:center;padding:1rem;">
+    <div id="modalBox" style="background:#1e2c3a;border:1px solid rgba(42,122,122,0.2);max-width:680px;width:100%;padding:2.5rem;box-shadow:0 8px 60px rgba(245,166,35,0.12);position:relative;">
+      <button id="modalClose" style="position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:#f5a623;font-size:1.8rem;cursor:pointer;line-height:1;z-index:2;">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products-bg" id="products">
+  <div class="section-label">Current Opportunities</div>
+  <h2>Featured Unlisted Shares</h2>
+  <div class="products-intro">
+    <p>Click on any company to view detailed financials and key investment data. Pricing and availability change regularly — contact us for the most current offers.</p>
+  </div>
+  <div class="products-grid">
+
+        <div class="product-card" data-company="nse">
+      <span class="product-tag">Pre-IPO ⭐ Featured</span>
+      <div class="product-name">NSE</div>
+      <div class="product-sector">National Stock Exchange · Financial Infra</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹1,970</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹4.8 Lakh Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="msei">
+      <span class="product-tag">Unlisted ⭐ Featured</span>
+      <div class="product-name">MSEI</div>
+      <div class="product-sector">Metropolitan Stock Exchange · Exchanges</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹4.82</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹1,500 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="csk">
+      <span class="product-tag">Unlisted ⭐ Featured</span>
+      <div class="product-name">CSK</div>
+      <div class="product-sector">Chennai Super Kings · Sports & Entertainment</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹264</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹10,017 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="oyo">
+      <span class="product-tag">Pre-IPO ⭐ Featured</span>
+      <div class="product-name">OYO</div>
+      <div class="product-sector">Oravel Stays · Hospitality Tech</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹24</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹33,631 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="zepto">
+      <span class="product-tag">Pre-IPO ⭐ Featured</span>
+      <div class="product-name">Zepto</div>
+      <div class="product-sector">Kiranakart Technologies · Quick Commerce</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹58</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹58,000 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+    <!-- SBI Mutual Fund — 6th featured card -->
+        <div class="product-card" data-company="sbimf">
+      <span class="product-tag">Pre-IPO ⭐ Featured</span>
+      <div class="product-name">SBI Mutual Fund</div>
+      <div class="product-sector">SBI Funds Management · Asset Management</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹775</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹34,000 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+  </div><!-- end first 6 -->
+
+  <div style="text-align:center;margin-top:2rem;">
+    <button id="toggleMoreBtn" onclick="toggleMoreCompanies()" style="background:transparent;border:1px solid var(--teal);color:var(--teal);padding:0.75rem 2.5rem;font-family:'Rajdhani',sans-serif;font-size:0.9rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;transition:background 0.3s,box-shadow 0.3s;">
+      Show More Companies ↓
+    </button>
+  </div>
+
+  <div id="moreCompaniesGrid" style="display:none;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1.5rem;">
+
+
+
+        <div class="product-card" data-company="ppfas">
+      <span class="product-tag">Unlisted</span>
+      <div class="product-name">PPFAS</div>
+      <div class="product-sector">Parag Parikh Financial Advisory · AMC</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹18,500</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹16,000 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="polymatech">
+      <span class="product-tag">Unlisted</span>
+      <div class="product-name">Polymatech Electronics</div>
+      <div class="product-sector">Semiconductors · Chennai</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹68</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹2,800 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="nayara">
+      <span class="product-tag">Unlisted</span>
+      <div class="product-name">Nayara Energy</div>
+      <div class="product-sector">Formerly Essar Oil · Petroleum Refining</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹750</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹1.9 Lakh Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="herofincorp">
+      <span class="product-tag">Pre-IPO</span>
+      <div class="product-name">Hero Fincorp</div>
+      <div class="product-sector">Hero MotoCorp Group · NBFC</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹1,050</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹14,000 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="ncdex">
+      <span class="product-tag">Unlisted</span>
+      <div class="product-name">NCDEX</div>
+      <div class="product-sector">National Commodity Exchange · Agri Derivatives</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹428</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹2,500 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="sterlite">
+      <span class="product-tag">Unlisted</span>
+      <div class="product-name">Sterlite Power</div>
+      <div class="product-sector">Power Transmission · Infrastructure</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹448</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹18,000 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="hdb">
+      <span class="product-tag">Pre-IPO</span>
+      <div class="product-name">HDB Financial Services</div>
+      <div class="product-sector">HDFC Group · NBFC</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹1,050</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹85,000 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="pharmeasy">
+      <span class="product-tag">Pre-IPO</span>
+      <div class="product-name">PharmEasy</div>
+      <div class="product-sector">API Holdings · E-Pharmacy</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹5</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹4,500 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="navi">
+      <span class="product-tag">Pre-IPO</span>
+      <div class="product-name">Navi Technologies</div>
+      <div class="product-sector">Sachin Bansal · Fintech & Insurance</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹30</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹7,000 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="mobikwik">
+      <span class="product-tag">SME Listed</span>
+      <div class="product-name">Mobikwik</div>
+      <div class="product-sector">Fintech · Digital Payments & BNPL</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹160</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹1,400 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="snapdeal">
+      <span class="product-tag">Pre-IPO</span>
+      <div class="product-name">Snapdeal</div>
+      <div class="product-sector">Jasper Infotech · E-commerce</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹5</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹2,500 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="incred">
+      <span class="product-tag">Pre-IPO</span>
+      <div class="product-name">InCred Financial</div>
+      <div class="product-sector">NBFC · Education & Personal Loans</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹240</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹10,000 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="swiggy">
+      <span class="product-tag">NSE/BSE Listed</span>
+      <div class="product-name">Swiggy</div>
+      <div class="product-sector">Bundl Tech · Food Delivery & Quick Commerce</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹371</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹90,000 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="fincare">
+      <span class="product-tag">Pre-IPO</span>
+      <div class="product-name">Fincare Small Finance Bank</div>
+      <div class="product-sector">Small Finance Bank · Microfinance</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹135</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹6,500 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+        <div class="product-card" data-company="ncl">
+      <span class="product-tag">Unlisted</span>
+      <div class="product-name">NCL Holdings</div>
+      <div class="product-sector">Coal & Mining · Natural Resources</div>
+      <div class="product-highlight">
+        <span class="product-highlight-label">Share Price</span>
+        <span class="product-highlight-value">~₹108</span>
+      </div>
+      <div class="product-highlight" style="margin-top:0.5rem;border-top:none;">
+        <span class="product-highlight-label">Market Cap</span>
+        <span class="product-highlight-value">~₹5,000 Cr</span>
+      </div>
+      <div class="product-cta-row"><span class="product-cta-link">View Details →</span></div>
+    </div>
+
+    <div class="product-card" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+      <span class="product-tag">On Request</span>
+      <div class="product-name">Don't See What You Need?</div>
+      <div class="product-sector">We source 50+ unlisted shares on request</div>
+      <div class="product-highlight"><span class="product-highlight-label">Type</span><span class="product-highlight-value">Custom Deal</span></div>
+      <div class="product-cta-row"><span class="product-cta-link">Contact Us →</span></div>
+    </div>
+
+  </div><!-- end moreCompaniesGrid -->
+
+</section>
+
+<div class="divider"></div>
+
+<!-- WHY US -->
+<section id="about">
+  <div class="section-label">Why GR One Capital</div>
+  <h2>Your Gateway to<br>Private Markets</h2>
+  <div class="why-grid">
+    <div class="why-text">
+      <p>Unlisted and pre-IPO shares offer some of the most compelling return potential in modern investing — but they require the right access, expertise, and network to navigate safely.</p>
+      <p>At GR One Capital, we connect serious investors with verified opportunities in high-growth companies before they list on public exchanges, ensuring you are positioned ahead of the crowd.</p>
+      <a href="#contact" class="btn-secondary">Learn More →</a>
+    </div>
+    <div class="why-features">
+      <div class="feature-card">
+        <span class="feature-icon">🔍</span>
+        <div class="feature-title">Verified Deals</div>
+        <div class="feature-desc">Every opportunity is rigorously vetted for authenticity and legal compliance.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">💼</span>
+        <div class="feature-title">Expert Advisory</div>
+        <div class="feature-desc">Dedicated advisors guide you through every step of the investment journey.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📈</span>
+        <div class="feature-title">Early Entry</div>
+        <div class="feature-desc">Access shares before public listing at pre-IPO valuations with higher upside.</div>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🔒</span>
+        <div class="feature-title">Secure Transfers</div>
+        <div class="feature-desc">All transactions are processed through compliant, secure off-market mechanisms.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- HOW IT WORKS -->
+<section id="process">
+  <div class="section-label">How It Works</div>
+  <h2>Simple. Transparent. Secure.</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-title">Connect With Us</div>
+      <div class="step-desc">Reach out via our contact form or call. Share your investment goals and budget.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-title">Browse Opportunities</div>
+      <div class="step-desc">Our advisor walks you through available unlisted and pre-IPO shares matching your profile.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-title">Due Diligence</div>
+      <div class="step-desc">We provide all documentation and compliance information for your review before commitment.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-title">Secure Transfer</div>
+      <div class="step-desc">Shares are transferred off-market via CDSL/NSDL in a fully compliant manner. Funds settle safely.</div>
+    </div>
+    <div class="step">
+      <div class="step-num">05</div>
+      <div class="step-title">Track &amp; Grow</div>
+      <div class="step-desc">We keep you updated on company developments and IPO timelines, so you're always informed.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TESTIMONIALS -->
+<section class="testi-bg">
+  <div class="section-label">Client Voices</div>
+  <h2>What Our Investors Say</h2>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <div class="testi-text">GR One Capital gave me access to deals I could never have found on my own. The team was transparent throughout and the process was seamless.</div>
+      <div class="testi-author">
+        <div class="testi-avatar">RK</div>
+        <div>
+          <div class="testi-name">Rajesh K.</div>
+          <div class="testi-role">HNI Investor, Bangalore</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <div class="testi-text">I invested in NSE unlisted shares through them. The documentation was clean, transfer was quick, and their advisory really helped me understand the valuation.</div>
+      <div class="testi-author">
+        <div class="testi-avatar">PM</div>
+        <div>
+          <div class="testi-name">Priya M.</div>
+          <div class="testi-role">Entrepreneur, Mumbai</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">"</div>
+      <div class="testi-text">Excellent service and deep knowledge of the unlisted market. They always have fresh opportunities and follow up regularly. Highly recommended.</div>
+      <div class="testi-author">
+        <div class="testi-avatar">AS</div>
+        <div>
+          <div class="testi-name">Arun S.</div>
+          <div class="testi-role">Business Owner, Chennai</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2>Start Your Investment Journey</h2>
+  <div class="contact-wrapper">
+    <div class="contact-info">
+      <p>Whether you're a first-time investor in unlisted shares or a seasoned HNI looking to diversify, our team is ready to assist. Reach out and we'll respond within 24 hours.</p>
+      <div class="contact-detail">
+        <span class="contact-detail-icon">📍</span>
+        <div class="contact-detail-text">Chennai, Tamil Nadu — Serving Clients Worldwide</div>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-icon">✉️</span>
+        <div class="contact-detail-text"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5d3628333c312d373c34336c6f6f6d1d3a303c3431733e3230">[email&#160;protected]</a></div>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-icon">📞</span>
+        <div class="contact-detail-text">+91 8072404857</div>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-icon">⏰</span>
+        <div class="contact-detail-text">Mon – Sat, 9 AM – 7 PM IST</div>
+      </div>
+    </div>
+    <form class="contact-form" onsubmit="handleSubmit(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" name="name" placeholder="Your name" required/>
+        </div>
+        <div class="form-group">
+          <label>Phone Number</label>
+          <input type="tel" name="phone" placeholder="Your phone number" required/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" name="email" placeholder="you@example.com"/>
+      </div>
+      <div class="form-group">
+        <label>I'm Interested In</label>
+        <select name="interest">
+          <option value="">Select an opportunity…</option>
+          <option>NSE Unlisted Shares</option>
+          <option>MSEI Unlisted Shares</option>
+          <option>CSK Unlisted Shares</option>
+          <option>OYO Pre-IPO</option>
+          <option>Zepto Pre-IPO</option>
+          <option>SBI Mutual Fund Pre-IPO</option>
+          <option>PPFAS Unlisted</option>
+          <option>Polymatech Electronics</option>
+          <option>Nayara Energy</option>
+          <option>Hero Fincorp Pre-IPO</option>
+          <option>HDB Financial Services</option>
+          <option>PharmEasy Pre-IPO</option>
+          <option>Navi Technologies</option>
+          <option>Other / Custom Request</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Investment Budget (Approx.)</label>
+        <select name="budget">
+          <option value="">Select range…</option>
+          <option>₹1L – ₹5L</option>
+          <option>₹5L – ₹25L</option>
+          <option>₹25L – ₹1Cr</option>
+          <option>₹1Cr+</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message (Optional)</label>
+        <textarea name="message" placeholder="Any specific questions or requirements…"></textarea>
+      </div>
+      <button type="submit" class="form-submit">Send via WhatsApp →</button>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">GR ONE <span>CAPITAL</span></div>
+  <div class="footer-note">© 2026 GR One Capital. Investment in unlisted shares involves risk. Please read all disclosures before investing.</div>
+  <ul class="footer-links">
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Disclaimer</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  const companies = {
+    nse: {
+      name: 'NSE – National Stock Exchange of India', tag: 'Pre-IPO', sector: 'Financial Infrastructure · Exchanges',
+      desc: "India's largest stock exchange commanding ~94% of equity cash market and ~100% of equity futures. A near-monopoly on India's capital market infrastructure. IPO actively in progress with SEBI NOC expected soon.",
+      price: '~₹1,970', mktcap: '~₹4.8 Lakh Cr',
+      financials: [['Revenue (FY25)','₹14,780 Cr+'],['PAT (FY25)','₹12,188 Cr (+47% YoY)'],['EBITDA Margin','~77%'],['ROE','49.4%'],['EPS','₹49.24'],['Dividend','₹35/share'],['Lot Size','100 shares'],['Debt','Zero']],
+      highlights: ["World's largest derivatives exchange by volume","11.3 Cr unique registered investors","3-yr revenue CAGR ~38%","CRISIL AAA/Stable rated"],
+      ipo: 'IPO Expected: 2025–2026 (SEBI NOC pending)', risk: 'IPO delays, regulatory changes, weekly expiry policy'
+    },
+    msei: {
+      name: 'MSEI – Metropolitan Stock Exchange of India', tag: 'Unlisted', sector: 'Financial Infrastructure · Exchanges',
+      desc: "India's third SEBI-licensed stock exchange. Fresh ₹1,000 Cr capital raised in 2025. Expanding into carbon credits, SME platform, and new indices.",
+      price: '~₹4.82', mktcap: '~₹1,500 Cr',
+      financials: [['Share Price','₹4.82'],['52W High','₹9'],['52W Low','₹2'],['Capital Raised','₹1,000 Cr+ (2025)'],['Total Assets','₹1,470 Cr'],['Net Worth','₹1,385 Cr'],['Revenue (FY25)','₹4.3 Cr'],['Lot Size','4,000 shares']],
+      highlights: ['Fresh ₹1,000 Cr capital infusion (2025)','Lowest transaction costs vs NSE/BSE','Carbon credit trading segment planned','SME & Debt platform in development'],
+      ipo: 'IPO: No timeline announced', risk: 'Low volumes, stiff competition from NSE/BSE, speculative'
+    },
+    csk: {
+      name: 'CSK – Chennai Super Kings Cricket Ltd', tag: 'Unlisted', sector: 'Sports & Entertainment · IPL Franchise',
+      desc: "India's most valuable IPL franchise and first sports unicorn. 5-time IPL champion. Revenue from IPL media rights, sponsorships, tickets, SA20 & MLC USA leagues.",
+      price: '~₹264', mktcap: '~₹10,017 Cr',
+      financials: [['Share Price','~₹264'],['52W High','₹271'],['52W Low','₹179'],['Revenue (FY24)','₹696 Cr (+120% YoY)'],['PAT (FY24)','₹201 Cr'],['EBITDA Margin','~30%'],['Cash','₹336 Cr'],['Lot Size','100 shares']],
+      highlights: ['5× IPL Champions (2010,2011,2018,2021,2023)',"India's first sports unicorn",'Brand value ₹1,000 Cr (+52% YoY)','International teams: SA20 & MLC USA'],
+      ipo: 'IPO: No official timeline', risk: 'Earnings tied to match performance; illiquid shares'
+    },
+    oyo: {
+      name: 'OYO – Oravel Stays Limited', tag: 'Pre-IPO', sector: 'Hospitality Tech · Travel',
+      desc: "India's largest hospitality tech platform in 35+ countries. First-ever full-year net profit in FY24. IPO preparations actively underway with DRHP filing expected in 2026.",
+      price: '~₹24', mktcap: '~₹33,631 Cr',
+      financials: [['Share Price','~₹24'],['52W High','₹55'],['52W Low','₹24'],['Revenue (FY25)','₹6,463 Cr (+20% YoY)'],['Net Profit (FY25)','₹623 Cr'],['Occupancy','70%'],['Countries','35+'],['Lot Size','500 shares']],
+      highlights: ['First-ever full-year profit in FY24','35+ countries presence','AI-driven pricing & revenue tools','DRHP filing expected 2026'],
+      ipo: 'IPO Expected: 2026 (DRHP in progress)', risk: 'Legal disputes, SoftBank opposition, Airbnb competition'
+    },
+    zepto: {
+      name: 'Zepto – Kiranakart Technologies Pvt Ltd', tag: 'Pre-IPO', sector: 'Quick Commerce · E-Grocery',
+      desc: "India's fastest-growing quick-commerce platform. 10-min grocery delivery via 1,000+ dark stores in 70+ cities. ₹19,000 Cr+ total funding. Backed by Motilal Oswal, CalPERS, Sachin Tendulkar.",
+      price: '~₹58', mktcap: '~₹60,000 Cr',
+      financials: [['Share Price','~₹58'],['52W Low','₹49'],['Valuation','~₹58,000 Cr'],['Total Funding','₹19,000 Cr+'],['Dark Stores','1,000+ / 70+ cities'],['Daily Orders','~17 Lakh'],['Market Share','~29-30%'],['Lot Size','500 shares']],
+      highlights: ['~29-30% market share in quick commerce','Backed by Morgan Stanley, Goldman Sachs','IPO bankers appointed','EBITDA break-even in 12–15 months'],
+      ipo: 'IPO Expected: 2026 (confidential filing)', risk: 'Cash burn, capital-intensive, Blinkit & Swiggy competition'
+    },
+    sbimf: {
+      name: 'SBI Funds Management Ltd (SBI Mutual Fund)', tag: 'Pre-IPO', sector: 'Asset Management · Finance',
+      desc: "India's largest AMC by AUM. Manages over ₹11 lakh crore. SBI Chairman confirmed IPO within 12 months in 2025. Near-monopoly in AMC space backed by State Bank of India.",
+      price: '~₹775', mktcap: '~₹34,000 Cr',
+      financials: [['Share Price','~₹775'],['AUM','₹11 Lakh Cr+'],['Revenue (Q3 FY26)','₹900 Cr+'],['PAT Margin','~40%'],['Market Share','~18% of India MF Industry'],['Schemes','35+'],['Face Value','₹10'],['Lot Size','50 shares']],
+      highlights: ["India's #1 AMC by total AUM",'SBI brand — unmatched trust & distribution','IPO in 12-month timeline (SBI Chairman confirmed)','SIP inflows growing — ₹25,000+ Cr monthly industry'],
+      ipo: 'IPO Expected: 2026', risk: 'Market downturn, SEBI fee cap risk, HDFC/ICICI AMC competition'
+    },
+    ppfas: {
+      name: 'PPFAS – Parag Parikh Financial Advisory Services', tag: 'Unlisted', sector: 'Asset Management · Finance',
+      desc: "AMC behind India's most trusted flexi-cap fund. Parag Parikh Flexi Cap Fund crossed ₹1 lakh crore AUM in May 2025 — largest actively managed equity fund in India. Known for value investing and zero-commission philosophy.",
+      price: '~₹18,500', mktcap: '~₹16,000 Cr',
+      financials: [['Share Price','~₹18,500'],['Revenue (Q3 FY26)','₹169 Cr (+66% YoY)'],['PAT (Q3 FY26)','₹98.6 Cr (+64% YoY)'],['PAT Margin','~58%'],['Flexi Cap AUM','₹1 Lakh Cr+'],['Total AUM','₹1.1 Lakh Cr+'],['Face Value','₹10'],['Lot Size','10 shares']],
+      highlights: ['Flexi Cap Fund crossed ₹1 lakh crore AUM','58%+ PAT margin — exceptional profitability','Zero-commission value-investing brand','Asset-light model with massive operating leverage'],
+      ipo: 'IPO: No official timeline', risk: 'AUM concentration in one flagship fund, market downturn risk'
+    },
+    polymatech: {
+      name: 'Polymatech Electronics Pvt Ltd', tag: 'Unlisted', sector: 'Semiconductors · Electronics Manufacturing',
+      desc: "India's first fab-grade semiconductor ATMP company, based in Chennai. Beneficiary of India's semiconductor PLI scheme. Positioned at the forefront of Make in India chip manufacturing.",
+      price: '~₹68', mktcap: '~₹2,800 Cr',
+      financials: [['Share Price','~₹68'],['52W High','~₹200'],['52W Low','~₹60'],['Industry','Semiconductor ATMP'],['PLI Benefit','India Semicon Policy'],['Location','Chennai, Tamil Nadu'],['Face Value','₹10'],['Lot Size','500 shares']],
+      highlights: ["India's first semiconductor ATMP company",'Beneficiary of India Semiconductor Mission','Chennai-based — strategic location','High-risk, high-reward early-stage play'],
+      ipo: 'IPO: No timeline announced', risk: 'Early-stage, NCLT insolvency notice (₹157 Cr claim), illiquid'
+    },
+    nayara: {
+      name: 'Nayara Energy Ltd (Formerly Essar Oil)', tag: 'Unlisted', sector: 'Petroleum Refining · Energy',
+      desc: "One of India's largest private refineries — 20 MMTPA Vadinar refinery among the world's most complex. Majority owned by Rosneft. Operates 6,000+ petrol pumps pan-India.",
+      price: '~₹750', mktcap: '~₹1.9 Lakh Cr',
+      financials: [['Share Price','~₹750'],['Market Cap','~₹1.94 Lakh Cr'],['Capacity','20 MMTPA (Vadinar)'],['Fuel Stations','6,000+ pan-India'],['Revenue','~₹1.5 Lakh Cr'],['Nelson Complexity','11.8 (World-class)'],['Face Value','₹10'],['Lot Size','100 shares']],
+      highlights: ['World-class refinery — Nelson Index 11.8','6,000+ petrol pump retail network','Rosneft majority owned — global backing','Potential IPO would be one of India\'s largest'],
+      ipo: 'IPO: No official timeline', risk: 'Geopolitical risk (Rosneft ownership), crude price volatility'
+    },
+    herofincorp: {
+      name: 'Hero Fincorp Ltd', tag: 'Pre-IPO', sector: 'NBFC · Vehicle & Retail Finance',
+      desc: "Hero MotoCorp's financial arm. One of India's leading NBFCs in two-wheeler loans, personal loans, and SME lending. 14+ lakh active customers. Loan book ₹18,000+ crore.",
+      price: '~₹1,050', mktcap: '~₹14,000 Cr',
+      financials: [['Share Price','~₹1,050'],['52W High','~₹1,400'],['Loan Book','₹18,000+ Cr'],['Customers','14 Lakh+'],['Revenue (FY25)','₹3,800+ Cr'],['Net NPA','~1.5%'],['Face Value','₹10'],['Lot Size','100 shares']],
+      highlights: ['Backed by Hero MotoCorp — India\'s #1 two-wheeler brand','Deep rural & semi-urban distribution','Strong growth in personal & SME loans','IPO filing expected 2025–26'],
+      ipo: 'IPO Expected: 2025–2026', risk: 'NPA risk, two-wheeler cycle slowdown, NBFC headwinds'
+    },
+    ncdex: {
+      name: 'NCDEX – National Commodity & Derivatives Exchange', tag: 'Unlisted', sector: 'Commodity Exchange · Agri Derivatives',
+      desc: "India's premier agricultural commodity derivatives exchange. Strategic monopoly in agri price discovery, backed by NSE, NABARD, LIC, and PNB. Partnered with TCS for tech upgrade and equity segment expansion.",
+      price: '~₹428', mktcap: '~₹2,500 Cr',
+      financials: [['Share Price','~₹428'],['52W High','~₹480'],['52W Low','~₹350'],['Shareholders','NSE, NABARD, LIC, PNB'],['Tech Partner','TCS'],['Segment','Agri + Equity (new)'],['Face Value','₹10'],['Lot Size','200 shares']],
+      highlights: ['India\'s #1 agri commodity exchange','Backed by NSE, NABARD, LIC, PNB','TCS partnership for equity platform','Rising institutional commodity participation'],
+      ipo: 'IPO: No timeline announced', risk: 'Low volumes, regulatory risk, competition from MCX'
+    },
+    sterlite: {
+      name: 'Sterlite Power Transmission Ltd', tag: 'Unlisted', sector: 'Power Transmission · Infrastructure',
+      desc: "India's largest private power transmission company. BOOM model — builds and operates inter-state corridors with recurring toll revenue. ₹25,000+ crore project pipeline. Key beneficiary of India's grid modernisation push.",
+      price: '~₹448', mktcap: '~₹18,000 Cr',
+      financials: [['Share Price','~₹448'],['52W High','~₹600'],['52W Low','~₹380'],['Projects','₹25,000+ Cr pipeline'],['Model','BOOM — recurring toll revenue'],['Revenue (FY25)','₹3,500+ Cr'],['Face Value','₹2'],['Lot Size','200 shares']],
+      highlights: ["India's largest private power transmission company",'Recurring BOOM toll revenue model','₹25,000+ Cr project pipeline','Beneficiary of India grid expansion'],
+      ipo: 'IPO: Was previously filed, re-filing expected', risk: 'Regulatory delays, policy risk, leverage'
+    }
+  };
+
+
+  function toggleMoreCompanies() {
+    const grid = document.getElementById('moreCompaniesGrid');
+    const btn = document.getElementById('toggleMoreBtn');
+    const isHidden = grid.style.display === 'none' || grid.style.display === '';
+    grid.style.display = isHidden ? 'grid' : 'none';
+    btn.textContent = isHidden ? 'Show Less ↑' : 'Show More Companies ↓';
+    if (isHidden) {
+      grid.querySelectorAll('.product-card[data-company]').forEach(function(card) {
+        card.addEventListener('click', function() {
+          openModal(this.getAttribute('data-company'));
+        });
+      });
+    }
+  }
+
+  const extraCompanies = {
+    hdb: {
+      name: 'HDB Financial Services Ltd', tag: 'Pre-IPO', sector: 'NBFC · HDFC Group',
+      desc: "HDFC Group's NBFC arm — one of India's largest. Provides loans against property, gold, vehicle, personal, and SME financing. DRHP filed for IPO. Loan book of ₹90,000+ crore with 1,600+ branches pan-India.",
+      price: '~₹1,050', mktcap: '~₹85,000 Cr',
+      financials: [['Share Price','~₹1,050'],['Loan Book','₹90,000+ Cr'],['Branches','1,600+ pan-India'],['Revenue (FY25)','₹16,000+ Cr'],['PAT (FY25)','₹2,400+ Cr'],['NPA (Gross)','~2.5%'],['Face Value','₹10'],['Lot Size','100 shares']],
+      highlights: ['HDFC Group brand — highest trust','₹90,000+ Cr loan book','DRHP filed — IPO imminent','1,600+ branches deep distribution'],
+      ipo: 'IPO Expected: 2025–2026 (DRHP filed)', risk: 'NPA risk, NBFC headwinds, HDFC Bank competition'
+    },
+    pharmeasy: {
+      name: 'PharmEasy – API Holdings Ltd', tag: 'Pre-IPO', sector: 'E-Pharmacy · Healthtech',
+      desc: "India's largest e-pharmacy platform. Backed by TPG and Prosus. Faced valuation markdown from ₹46,600 Cr to ~₹5,800 Cr after failed IPO. Now restructuring under new CEO with focus on profitability.",
+      price: '~₹5', mktcap: '~₹4,500 Cr',
+      financials: [['Share Price','~₹5'],['52W High','~₹18'],['Peak Valuation','₹46,600 Cr'],['Current Valuation','~₹4,200–5,800 Cr'],['Revenue (FY24)','₹6,700+ Cr'],['Status','Restructuring'],['Face Value','₹1'],['Lot Size','10,000 shares']],
+      highlights: ["India's largest e-pharmacy platform",'Revenue base ₹6,700+ Cr','Massive discount from peak valuation','Restructuring for profitability'],
+      ipo: 'IPO: Previously withdrawn, relisting possible post-restructure', risk: 'Ongoing losses, governance concerns, high dilution risk'
+    },
+    navi: {
+      name: 'Navi Technologies Ltd', tag: 'Pre-IPO', sector: 'Fintech · Insurance & Lending',
+      desc: "Founded by Flipkart co-founder Sachin Bansal. Offers home loans, personal loans, mutual funds, and health insurance. Filed DRHP for IPO. One of India's rare full-stack fintech companies with NBFC, insurance, and AMC licenses.",
+      price: '~₹30', mktcap: '~₹7,000 Cr',
+      financials: [['Share Price','~₹30'],['Products','Loans, MF, Insurance'],['Loan Book','₹10,000+ Cr'],['DRHP Filed','Yes (IPO pending)'],['Founder','Sachin Bansal (ex-Flipkart)'],['Licenses','NBFC + Insurance + AMC'],['Face Value','₹1'],['Lot Size','500 shares']],
+      highlights: ['Founded by Sachin Bansal (Flipkart co-founder)','Full-stack: NBFC + Insurance + AMC','DRHP filed — IPO pipeline','Tech-driven underwriting'],
+      ipo: 'IPO Expected: 2025–2026 (DRHP filed)', risk: 'Cash burn, RBI scrutiny, competitive NBFC market'
+    },
+    mobikwik: {
+      name: 'MobiKwik – One MobiKwik Systems Ltd', tag: 'SME Listed', sector: 'Fintech · Digital Payments & BNPL',
+      desc: "India's fintech offering digital wallet, UPI, and BNPL. Listed on NSE SME November 2024. One of the few listed digital payment companies with 150M+ registered users.",
+      price: '~₹160', mktcap: '~₹1,400 Cr',
+      financials: [['Share Price','~₹160'],['Listed','NSE SME (Nov 2024)'],['Users','150M+ registered'],['Revenue (FY24)','₹875 Cr'],['BNPL Customers','4.5M+ active'],['Payment Volume','₹57,000 Cr+'],['Face Value','₹2'],['Lot Size','500 shares']],
+      highlights: ['150M+ registered users','Listed NSE SME Nov 2024','BNPL product 4.5M+ users','Growing ZIP credit book'],
+      ipo: 'Listed: NSE SME (Nov 2024)', risk: 'UPI competition from PhonePe/GPay, BNPL regulatory risk'
+    },
+    snapdeal: {
+      name: 'Snapdeal – Jasper Infotech Pvt Ltd', tag: 'Pre-IPO', sector: 'E-commerce · Value Retail',
+      desc: "India's value-focused e-commerce platform targeting Tier 2-4 cities. After restructuring and declining Flipkart merger offer, refocused on profitability. 50M+ customers. Targeting IPO in value segment.",
+      price: '~₹5', mktcap: '~₹2,500 Cr',
+      financials: [['Share Price','~₹5'],['Customers','50M+ active'],['Focus','Tier 2-4 value e-commerce'],['Revenue (FY24)','₹400+ Cr'],['Sellers','500,000+'],['Profitability','Near break-even'],['Face Value','₹1'],['Lot Size','5,000 shares']],
+      highlights: ['50M+ customers in Tier 2-4 India','Value segment underserved by Amazon/Flipkart','Declined ₹950 Cr Flipkart offer','Near break-even — leaner structure'],
+      ipo: 'IPO: No official timeline', risk: 'Intense competition, low GMV growth, deep discount to peak valuation'
+    },
+    incred: {
+      name: 'InCred Financial Services Ltd', tag: 'Pre-IPO', sector: 'NBFC · Education & Personal Finance',
+      desc: "NBFC specialising in education loans, personal loans, and SME lending. Founded by ex-Deutsche Bank MD Bhupinder Singh. Loan book crossed ₹11,000 Cr. One of India's fastest-growing NBFCs with digital-first underwriting.",
+      price: '~₹240', mktcap: '~₹10,000 Cr',
+      financials: [['Share Price','~₹240'],['Loan Book','₹11,000+ Cr'],['Revenue (FY25)','₹2,500+ Cr'],['PAT (FY25)','₹350+ Cr'],['Segments','Education, Personal, SME'],['Founder','Ex-Deutsche Bank MD'],['Face Value','₹10'],['Lot Size','100 shares']],
+      highlights: ['Fastest-growing NBFC in education loans','₹11,000+ Cr loan book','Digital-first underwriting','Ex-Deutsche Bank leadership'],
+      ipo: 'IPO: Filing expected 2026', risk: 'Education sector NPA risk, NBFC competition, rising cost of funds'
+    },
+    swiggy: {
+      name: 'Swiggy – Bundl Technologies Pvt Ltd', tag: 'NSE/BSE Listed', sector: 'Food Delivery · Quick Commerce',
+      desc: "India's second-largest food delivery and quick-commerce platform. Listed on NSE/BSE in November 2024. Competes with Zomato in food delivery and Blinkit in quick-commerce (Instamart).",
+      price: '~₹371', mktcap: '~₹90,000 Cr',
+      financials: [['Share Price','~₹371'],['Listed','NSE/BSE (Nov 2024)'],['Revenue (FY25)','₹15,000+ Cr'],['Food Delivery Share','~40% market'],['Instamart Cities','50+ cities'],['Daily Orders','8M+ daily'],['Face Value','₹1'],['Lot Size','27 shares']],
+      highlights: ['India #2 food delivery — 40% market share','Instamart competing with Blinkit','Listed Nov 2024','Revenue growing 35%+ YoY'],
+      ipo: 'Listed: NSE/BSE (Nov 2024)', risk: 'Zomato competition, quick-commerce cash burn'
+    },
+    fincare: {
+      name: 'Fincare Small Finance Bank', tag: 'Pre-IPO', sector: 'Small Finance Bank · Microfinance',
+      desc: "One of India's leading small finance banks focused on rural and semi-urban microfinance, deposits, and retail banking. Strong presence in South India and Gujarat. DRHP filed in 2022.",
+      price: '~₹135', mktcap: '~₹6,500 Cr',
+      financials: [['Share Price','~₹135'],['Deposits','₹10,000+ Cr'],['Loan Book','₹10,500+ Cr'],['Branches','1,000+'],['Revenue (FY25)','₹2,500+ Cr'],['NPA (Gross)','~3.5%'],['Face Value','₹10'],['Lot Size','200 shares']],
+      highlights: ['Strong South India & Gujarat network','1,000+ branches in underserved markets','DRHP previously filed','Microfinance sector recovery play'],
+      ipo: 'IPO: DRHP filed, timeline TBD', risk: 'MFI sector NPA stress, RBI regulations, rural income volatility'
+    },
+    ncl: {
+      name: 'NCL Holdings Ltd', tag: 'Unlisted', sector: 'Coal & Mining · Natural Resources',
+      desc: "A diversified natural resources holding company with interests in coal mining, power, and infrastructure. Popular with investors seeking commodity exposure at the pre-listing stage.",
+      price: '~₹108', mktcap: '~₹5,000 Cr',
+      financials: [['Share Price','~₹108'],['52W High','~₹180'],['52W Low','~₹90'],['Sector','Coal & Natural Resources'],['Interests','Coal, Power, Infrastructure'],['Revenue','Limited public data'],['Face Value','₹10'],['Lot Size','500 shares']],
+      highlights: ['Commodity play — coal & natural resources','Trading at discount to historical high','Speculative unlisted pick','Potential value unlock via divestment'],
+      ipo: 'IPO: No timeline announced', risk: 'Speculative, limited public financials, commodity cycle risk'
+    }
+  };
+
+  Object.assign(companies, extraCompanies);
+
+  function openModal(id) {
+    const c = companies[id];
+    if (!c) return;
+    const rows = c.financials.map(([k,v]) =>
+      `<div style="display:flex;justify-content:space-between;align-items:center;padding:0.55rem 0;border-bottom:1px solid rgba(245,166,35,0.1);">
+        <span style="font-size:0.82rem;color:#b8c8e0;">${k}</span>
+        <span style="font-size:0.88rem;font-weight:600;color:#e8eef8;">${v}</span>
+      </div>`).join('');
+    const bullets = c.highlights.map(h =>
+      `<li style="font-size:0.83rem;color:#b8c8e0;margin-bottom:0.5rem;list-style:none;padding-left:1.2rem;position:relative;">
+        <span style="position:absolute;left:0;color:#f5a623;">→</span>${h}
+      </li>`).join('');
+    document.getElementById('modalContent').innerHTML = `
+      <div style="display:flex;gap:0.8rem;align-items:center;margin-bottom:1.2rem;flex-wrap:wrap;">
+        <span style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:#f5a623;border:1px solid rgba(245,166,35,0.28);padding:0.2rem 0.7rem;">${c.tag}</span>
+        <span style="font-size:0.75rem;color:#b8c8e0;">${c.sector}</span>
+      </div>
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,4vw,1.8rem);font-weight: 700;color:#e8eef8;margin-bottom:1rem;line-height:1.2;">${c.name}</h3>
+      <p style="font-size:0.9rem;color:#b8c8e0;line-height:1.75;margin-bottom:1.5rem;">${c.desc}</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;">
+        <div style="background:#2e4258;padding:1rem;border:1px solid rgba(245,166,35,0.12);">
+          <div style="font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#f5a623;margin-bottom:0.3rem;">Current Price</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:#f5a623;">${c.price}</div>
+        </div>
+        <div style="background:#2e4258;padding:1rem;border:1px solid rgba(245,166,35,0.12);">
+          <div style="font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:#f5a623;margin-bottom:0.3rem;">Market Cap</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.6rem;color:#f5a623;">${c.mktcap}</div>
+        </div>
+      </div>
+      <div style="margin-bottom:1.5rem;">
+        <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#f5a623;margin-bottom:0.7rem;">Key Financials</div>
+        ${rows}
+        <p style="font-size:0.65rem;color:#5a6a88;margin-top:0.5rem;">Prices indicative. Source: public disclosures.</p>
+      </div>
+      <div style="margin-bottom:1.5rem;">
+        <div style="font-size:0.7rem;letter-spacing:0.15em;text-transform:uppercase;color:#f5a623;margin-bottom:0.7rem;">Why Invest</div>
+        <ul style="padding:0;margin:0;">${bullets}</ul>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;padding-top:1rem;border-top:1px solid rgba(245,166,35,0.1);">
+        <div>
+          <div style="font-size:0.78rem;color:#f5a623;font-weight:600;margin-bottom:0.2rem;">${c.ipo}</div>
+          <div style="font-size:0.7rem;color:#5a6a88;">⚠ ${c.risk}</div>
+        </div>
+        <a href="#contact" id="modalEnquireBtn" style="background:#f5a623;color:#141c24;padding:0.75rem 1.8rem;font-family:'Rajdhani',sans-serif;font-size:0.88rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;display:inline-block;cursor:pointer;">Enquire Now →</a>
+      </div>`;
+    document.getElementById('companyModal').style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    document.getElementById('modalEnquireBtn').addEventListener('click', closeModal);
+  }
+
+  function closeModal() {
+    document.getElementById('companyModal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+
+    const name     = (form.name.value     || '').trim();
+    const phone    = (form.phone.value    || '').trim();
+    const email    = (form.email.value    || '').trim();
+    const interest = (form.interest.value || '').trim();
+    const budget   = (form.budget.value   || '').trim();
+    const message  = (form.message.value  || '').trim();
+
+    if (!name || !phone) {
+      alert('Please enter your name and phone number.');
+      return;
+    }
+
+    const text =
+      '📋 *New Enquiry — GR One Capital*%0A%0A' +
+      '👤 *Name:* ' + encodeURIComponent(name) + '%0A' +
+      '📞 *Phone:* ' + encodeURIComponent(phone) + '%0A' +
+      '✉️ *Email:* ' + encodeURIComponent(email || '—') + '%0A' +
+      '📈 *Interest:* ' + encodeURIComponent(interest || '—') + '%0A' +
+      '💰 *Budget:* ' + encodeURIComponent(budget || '—') + '%0A' +
+      '💬 *Message:* ' + encodeURIComponent(message || '—');
+
+    window.open('https://wa.me/918072404857?text=' + text, '_blank');
+    form.reset();
+  }
+
+  // Event delegation — works for all cards including hidden ones
+  document.addEventListener('click', function(e) {
+    var card = e.target.closest('.product-card[data-company]');
+    if (card) { openModal(card.getAttribute('data-company')); return; }
+  });
+
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modalBackdrop').addEventListener('click', closeModal);
+  document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', function() {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+      document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mobile-link').forEach(function(link
